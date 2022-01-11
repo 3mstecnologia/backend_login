@@ -1,0 +1,15 @@
+############################
+Enviando o GET inicial de teste
+GET http://10.88.1.219:3030 HTTP/1.1
+content-type: application/json
+############################
+GET http://10.88.1.219:3030/user/listatodosusuarios HTTP/1.1
+content-type: application/json
+#######################
+POST http://10.88.1.219:3030/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "cpf": "00801074940",
+    "passwordEnviado": "1234"
+}
