@@ -17,7 +17,7 @@ routes.get(
 
   UserController.listaTodosUsuarios
 );
-
+routes.post("/user/cadastrausuario", UserController.cadastraUsuario);
 routes.post("/login", LoginController.login);
 routes.post("/recuperaUsuario", LoginController.repucuperaDadosUsuario);
 module.exports = routes;

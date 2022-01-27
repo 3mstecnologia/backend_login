@@ -7,12 +7,12 @@ module.exports = {
   async login(req, res) {
     console.log("login", req.body);
     console.log("Corpo CPF - ", req.body.cpf);
-    console.log("Corpo - passwd ", req.body.passwordEnviado);
+    console.log("Corpo - senha ", req.body.senha);
 
-    if (!req.body.cpf || !req.body.passwordEnviado) {
+    if (!req.body.cpf || !req.body.senha) {
       return res.status(401).send({ error: "Dados insuficientes" });
     }
-    var { cpf, passwordEnviado } = req.body;
+    var { cpf, senha } = req.body;
 
     var userEnviado = await dbmysql.query(
       `
@@ -24,7 +24,7 @@ module.exports = {
     if (userEnviado.length > 0) {
       var userEnviado = userEnviado[0];
       var hash = crypto
-        .pbkdf2Sync(passwordEnviado, userEnviado.salt, 1000, 64, "sha512")
+        .pbkdf2Sync(senha, userEnviado.salt, 1000, 64, "sha512")
         .toString("hex");
       //console.log(hash);
       var user = await dbmysql.query(
@@ -42,11 +42,12 @@ module.exports = {
       if (hash === user.password) {
         return res.json({
           token: jwt.sign({ user }, "senhadoemajuniplac", { expiresIn: "12h" }),
-          //user: {
-          //  id: user.id,
-          //  username: user.username,
-          //  categoria: user.categoria,
-          //  nome: user.nome,
+          user: {
+            id: user.id,
+            username: user.username,
+            categoria: user.categoria,
+            nome: user.nome,
+          },
         });
       } else {
         return res.status(401).send("Senha incorreta");

@@ -45,7 +45,7 @@ module.exports = {
         (nome, username, password, cpf, salt, categoria, createdAt)
         VALUES('${nome}', '${username}', '${password}', '${cpf}', '${salt}','${categoria}', '${datetime}');
         `,
-      { type: dbmysql.QueryTypes.INSERT }
+      { type: conectanomysqlAPI.QueryTypes.INSERT }
     );
 
     return res.json({ nome, categoria });
